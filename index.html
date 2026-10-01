@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Terran Explorer</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+</head>
+<body>
+    <!-- Start Page -->
+    <div id="startPage" class="page active">
+        <div class="stars-background"></div>
+        <div class="start-container">
+            <h1 class="game-title">TERRAN EXPLORER</h1>
+            <p class="tagline">Explore Earth. Discover its features. Understand its forces.</p>
+            <div class="button-group">
+                <button class="btn btn-primary" id="definitionsBtn">Definitions and Terms</button>
+                <button class="btn btn-secondary" id="continueGameBtn">Continue to the Game</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Definitions and Terms Page -->
+    <div id="definitionsPage" class="page">
+        <div class="definitions-container">
+            <div class="earth-viewer">
+                <div id="earthContainer" class="earth-canvas"></div>
+                <div class="earth-info">
+                    <p>Click on features on the Earth to learn more</p>
+                </div>
+            </div>
+
+            <div id="featurePanel" class="feature-panel hidden">
+                <button class="close-btn" id="closePanelBtn">&times;</button>
+                <div class="feature-content">
+                    <h2 id="featureName"></h2>
+                    <div class="feature-icon" id="featureIcon"></div>
+                    <div class="feature-definition">
+                        <h3>Definition</h3>
+                        <p id="featureDefinition"></p>
+                    </div>
+                    <div class="feature-explanation">
+                        <h3>Explanation</h3>
+                        <p id="featureExplanation"></p>
+                    </div>
+                    <div class="feature-processes">
+                        <h3>Important Processes</h3>
+                        <ul id="featureProcesses"></ul>
+                    </div>
+                    <div class="feature-fact">
+                        <h3>🌍 Did You Know?</h3>
+                        <p id="featureFact"></p>
+                    </div>
+                    <div class="feature-disasters">
+                        <h3>Connected Disasters</h3>
+                        <div id="relatedDisasters" class="disaster-tags"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="howToPlayPanel" class="how-to-play-panel hidden">
+                <button class="close-btn" id="closeHowToBtn">&times;</button>
+                <div class="how-to-content">
+                    <h2>How to Play the Game</h2>
+                    <div class="how-to-steps">
+                        <div class="step">
+                            <h3>1. Select a Feature on the Earth</h3>
+                            <p>Click on Mountain, Sea, Forest, or Volcano on the rotating Earth.</p>
+                        </div>
+                        <div class="step">
+                            <h3>2. Read the Information Panel</h3>
+                            <p>Learn the definition, explanation, and interesting facts about each feature.</p>
+                        </div>
+                        <div class="step">
+                            <h3>3. Learn How Features Form</h3>
+                            <p>Understand the processes that create these natural features.</p>
+                        </div>
+                        <div class="step">
+                            <h3>4. Discover Connected Disasters</h3>
+                            <p>See which natural disasters are related to each feature.</p>
+                        </div>
+                        <div class="step">
+                            <h3>5. Explore Different Parts of Earth</h3>
+                            <p>Visit all features to complete your discovery log.</p>
+                        </div>
+                        <div class="step">
+                            <h3>6. Select Your Character</h3>
+                            <p>Choose a character (Explorer, Scientist, Geologist, or Ranger) that matches your learning style.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="definitions-controls">
+                <button class="btn btn-info" id="howToPlayBtn">How to Play the Game</button>
+                <button class="btn btn-back" id="backFromDefinitionsBtn">← Back to Menu</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Character Selection Page -->
+    <div id="characterPage" class="page">
+        <div class="stars-background"></div>
+        <div class="character-container">
+            <h1>Choose Your Character</h1>
+            <p class="character-subtitle">Select your role as a Terran Explorer</p>
+            
+            <div class="characters-grid">
+                <div class="character-card" data-character="explorer">
+                    <div class="character-avatar explorer-avatar">🧭</div>
+                    <h3>Explorer</h3>
+                    <p class="character-role">General Discovery</p>
+                    <p class="character-description">Discover Earth's natural features and learn interesting facts along your journey.</p>
+                </div>
+
+                <div class="character-card" data-character="scientist">
+                    <div class="character-avatar scientist-avatar">🔬</div>
+                    <h3>Scientist</h3>
+                    <p class="character-role">Fact-Focused Explanations</p>
+                    <p class="character-description">Focus on scientific explanations, evidence, and how Earth's systems work.</p>
+                </div>
+
+                <div class="character-card" data-character="geologist">
+                    <div class="character-avatar geologist-avatar">🪨</div>
+                    <h3>Geologist</h3>
+                    <p class="character-role">Detailed Geology</p>
+                    <p class="character-description">Learn about rocks, tectonic plates, Earth's layers, and geological processes.</p>
+                </div>
+
+                <div class="character-card" data-character="ranger">
+                    <div class="character-avatar ranger-avatar">🌿</div>
+                    <h3>Ranger</h3>
+                    <p class="character-role">Nature & Environment</p>
+                    <p class="character-description">Explore ecosystems, biodiversity, conservation, and environmental changes.</p>
+                </div>
+            </div>
+
+            <button class="btn btn-primary" id="nextCharacterBtn" disabled>Next →</button>
+            <button class="btn btn-back" id="backFromCharacterBtn">← Back to Menu</button>
+        </div>
+    </div>
+
+    <!-- Main Game Page -->
+    <div id="gamePage" class="page">
+        <div class="game-header">
+            <div class="header-left">
+                <h1>TERRAN EXPLORER</h1>
+            </div>
+            <div class="header-center">
+                <div class="discovery-log-preview">
+                    <h3>Discovery Log</h3>
+                    <div class="progress-bar">
+                        <div id="progressFill" class="progress-fill" style="width: 0%"></div>
+                    </div>
+                    <p id="progressText">0 / 8</p>
+                </div>
+            </div>
+            <div class="header-right">
+                <div class="player-info">
+                    <p>Character: <span id="playerCharacter"></span></p>
+                </div>
+                <button class="btn btn-home" id="homeBtn">🏠 Home</button>
+            </div>
+        </div>
+
+        <div class="game-container">
+            <div id="gameEarthContainer" class="game-earth-canvas"></div>
+
+            <div id="gameFeaturePanel" class="game-feature-panel hidden">
+                <button class="close-btn" id="closeGamePanelBtn">&times;</button>
+                <div class="game-feature-content">
+                    <h2 id="gameFeatureName"></h2>
+                    <div class="game-feature-icon" id="gameFeatureIcon"></div>
+                    <div class="game-feature-definition">
+                        <h3>What is it?</h3>
+                        <p id="gameFeatureDefinition"></p>
+                    </div>
+                    <div class="game-feature-formation">
+                        <h3>Why does it exist?</h3>
+                        <p id="gameFeatureFormation"></p>
+                    </div>
+                    <div class="game-feature-processes">
+                        <h3>Important Processes</h3>
+                        <ul id="gameFeatureProcesses"></ul>
+                    </div>
+                    <div class="game-feature-fact">
+                        <h3>🌍 Did You Know?</h3>
+                        <p id="gameFeatureFact"></p>
+                    </div>
+                    <div class="game-feature-disasters">
+                        <h3>Connected Natural Disasters</h3>
+                        <div id="gameRelatedDisasters" class="disaster-scenarios"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="disasterPanel" class="disaster-panel hidden">
+                <button class="close-btn" id="closeDisasterBtn">&times;</button>
+                <div class="disaster-content">
+                    <h2 id="disasterTitle"></h2>
+                    <div class="disaster-animation" id="disasterAnimation"></div>
+                    <div class="disaster-info">
+                        <h3>What Happens?</h3>
+                        <p id="disasterDescription"></p>
+                    </div>
+                    <div class="disaster-causes">
+                        <h3>How Does it Occur?</h3>
+                        <p id="disasterCauses"></p>
+                    </div>
+                    <div class="disaster-effects">
+                        <h3>Possible Effects</h3>
+                        <ul id="disasterEffects"></ul>
+                    </div>
+                </div>
+            </div>
+
+            <div id="completionPanel" class="completion-panel hidden">
+                <div class="completion-content">
+                    <h2>🌎 EXPLORATION COMPLETE!</h2>
+                    <p>Congratulations, <span id="completionCharacter"></span>! You have discovered Earth's major natural features and learned how they are connected to natural disasters.</p>
+                    <div class="discovery-log-full">
+                        <h3>Your Discoveries</h3>
+                        <div class="discovery-checklist">
+                            <div class="discovery-item">
+                                <input type="checkbox" id="check-mountain" checked disabled>
+                                <label for="check-mountain">🏔️ Mountain</label>
+                            </div>
+                            <div class="discovery-item">
+                                <input type="checkbox" id="check-sea" checked disabled>
+                                <label for="check-sea">🌊 Sea</label>
+                            </div>
+                            <div class="discovery-item">
+                                <input type="checkbox" id="check-forest" checked disabled>
+                                <label for="check-forest">🌲 Forest</label>
+                            </div>
+                            <div class="discovery-item">
+                                <input type="checkbox" id="check-volcano" checked disabled>
+                                <label for="check-volcano">🌋 Volcano</label>
+                            </div>
+                            <div class="discovery-item">
+                                <input type="checkbox" id="check-earthquake" checked disabled>
+                                <label for="check-earthquake">🌎 Earthquake</label>
+                            </div>
+                            <div class="discovery-item">
+                                <input type="checkbox" id="check-tsunami" checked disabled>
+                                <label for="check-tsunami">🌊 Tsunami</label>
+                            </div>
+                            <div class="discovery-item">
+                                <input type="checkbox" id="check-eruption" checked disabled>
+                                <label for="check-eruption">🌋 Volcanic Eruption</label>
+                            </div>
+                            <div class="discovery-item">
+                                <input type="checkbox" id="check-landslide" checked disabled>
+                                <label for="check-landslide">⛰️ Landslide</label>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="btn btn-primary" id="restartBtn">Play Again</button>
+                    <button class="btn btn-back" id="completionHomeBtn">← Back to Menu</button>
+                </div>
+            </div>
+
+            <div class="game-controls">
+                <button class="btn btn-back" id="backFromGameBtn">← Back to Menu</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
